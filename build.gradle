@@ -66,8 +66,8 @@ ext {
 
 configurations.all {
     // check for updates every build
-    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
 
 

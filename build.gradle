@@ -157,7 +157,6 @@ project(":commons") {
         compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisSpringVersion"
     }
 
-    apply plugin: 'java'
     apply plugin: 'maven-publish'
 
     group 'com.zhw.ms'
@@ -213,6 +212,50 @@ project(":demo-service-contract") {
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
         compile "com.zhw.ms:commons:1.0.0-SNAPSHOT"
     }
+
+    apply plugin: 'maven-publish'
+
+    group 'com.zhw.ms'
+    version '1.0.0-SNAPSHOT'
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId 'demo-service-contract'
+                from components.java
+                artifact(sourcesJar) {
+                    classifier = 'sources'
+                }
+                pom.withXml {
+                    asNode().dependencies.dependency.each { dep ->
+                        if (dep.version.text() == "unspecified") {
+                            dep.getAt('groupId').get(0).setValue(project.group)
+                            dep.getAt('version').get(0).setValue(project.version)
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                if (project.version.endsWith('-SNAPSHOT')) {
+                    url "$nexusUrl/repository/maven-snapshots/"
+                } else {
+                    url "$nexusUrl/repository/maven-releases/"
+                }
+                credentials {
+                    username = 'zhw'
+                    password = 'zhw123'
+                    //admin846413
+                }
+            }
+        }
+    }
 }
 
 project(":demo-service-client") {
@@ -220,5 +263,7 @@ project(":demo-service-client") {
 }
 
 project(":demo-service-server") {
-
+    dependencies {
+        compile "com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT"
+    }
 }

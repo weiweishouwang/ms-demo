@@ -1,6 +1,5 @@
 package com.zhw.ms.commons.mongo;
 
-import com.zhw.ms.commons.filter.LogFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Query;

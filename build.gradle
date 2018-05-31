@@ -5,7 +5,7 @@ version '1.0.0-SNAPSHOT'
 ext {
     javaxMailVersion = '1.4.7'
     junitVersion = '4.11'
-    springBootVersion = '2.0.2.RELEASE'
+    //springBootVersion = '1.5.10.RELEASE'
     //springVersion = '4.2.4.RELEASE'
     commonsIOVersion = '2.4'
     commonsCollectionVersion = '3.2.2'
@@ -67,7 +67,7 @@ ext {
 
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
+        springBootVersion = '1.5.10.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -75,6 +75,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
     }
 }
 
@@ -83,6 +84,13 @@ buildscript {
 subprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Edgware.SR3"
+        }
+    }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -120,7 +128,7 @@ subprojects {
         compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
         compile "javax.mail:mail:$javaxMailVersion"
         compile "commons-httpclient:commons-httpclient:$httpclientVersion"
-        compile "redis.clients:jedis:$jedisVersion"
+        //compile "redis.clients:jedis:$jedisVersion"
         compile "com.google.code.gson:gson:$gsonVersion"
         compile "joda-time:joda-time:2.9.6"
         compile "com.google.zxing:core:3.3.0"
@@ -265,5 +273,6 @@ project(":demo-service-client") {
 project(":demo-service-server") {
     dependencies {
         compile "com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT"
+        compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     }
 }

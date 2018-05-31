@@ -2,11 +2,7 @@ package com.zhw.ms.commons.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.UpdateResult;
 import com.zhw.ms.commons.entity.Entity;
-import com.zhw.ms.commons.filter.LogFilter;
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,7 +213,7 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
 
     @Override
     public <T> List<T> find(Query query, Class<T> cls, String... includeFields) {
-        Document fieldsObject = new Document();
+        BasicDBObject fieldsObject = new BasicDBObject();
 
         if (includeFields != null && includeFields.length > 0) {
             for (int i = 0; i < includeFields.length; i++) {
@@ -264,16 +260,16 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
 
     @Override
     public boolean remove(Object objectData) {
-        DeleteResult result = mongoTemplate.remove(objectData);
+        WriteResult result = mongoTemplate.remove(objectData);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public boolean remove(String collectionName, Object objectData) {
-        DeleteResult result = mongoTemplate.remove(objectData, collectionName);
+        WriteResult result = mongoTemplate.remove(objectData, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
@@ -313,27 +309,27 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
     public <T extends Object> boolean removeByIds(Collection<? extends Object> ids, Class<T> cls) {
         Criteria criteria = Criteria.where("id").in(ids);
         Query query = new Query(criteria);
-        DeleteResult result = mongoTemplate.remove(query, cls);
+        WriteResult result = mongoTemplate.remove(query, cls);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public <T extends Object> boolean removeByIds(String collectionName, Collection<? extends Object> ids, Class<T> cls) {
         Criteria criteria = Criteria.where("id").in(ids);
         Query query = new Query(criteria);
-        DeleteResult result = mongoTemplate.remove(query, cls, collectionName);
+        WriteResult result = mongoTemplate.remove(query, cls, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public boolean removeByIds(String collectionName, Collection<? extends Object> ids) {
         Criteria criteria = Criteria.where("id").in(ids);
         Query query = new Query(criteria);
-        DeleteResult result = mongoTemplate.remove(query, collectionName);
+        WriteResult result = mongoTemplate.remove(query, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
@@ -355,25 +351,25 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
 
     @Override
     public <T extends Object> boolean remove(Query query, Class<T> cls) {
-        DeleteResult result = mongoTemplate.remove(query, cls);
+        WriteResult result = mongoTemplate.remove(query, cls);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
 
     @Override
     public <T extends Object> boolean remove(String collectionName, Query query, Class<T> cls) {
-        DeleteResult result = mongoTemplate.remove(query, cls, collectionName);
+        WriteResult result = mongoTemplate.remove(query, cls, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
 
     @Override
     public boolean remove(String collectionName, Query query) {
-        DeleteResult result = mongoTemplate.remove(query, collectionName);
+        WriteResult result = mongoTemplate.remove(query, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
@@ -408,23 +404,23 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
 
     @Override
     public <T extends Object> boolean update(Query query, Update update, Class<T> cls) {
-        UpdateResult result = mongoTemplate.updateMulti(query, update, cls);
+        WriteResult result = mongoTemplate.updateMulti(query, update, cls);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public <T extends Object> boolean update(String collectionName, Query query, Update update, Class<T> cls) {
-        UpdateResult result = mongoTemplate.updateMulti(query, update, cls, collectionName);
+        WriteResult result = mongoTemplate.updateMulti(query, update, cls, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public boolean update(String collectionName, Query query, Update update) {
-        UpdateResult result = mongoTemplate.updateMulti(query, update, collectionName);
+        WriteResult result = mongoTemplate.updateMulti(query, update, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
@@ -449,23 +445,23 @@ public class MongoBaseDaoImpl implements MongoBaseDao {
 
     @Override
     public <T extends Object> boolean upsert(Query query, Update update, Class<T> cls) {
-        UpdateResult result = mongoTemplate.upsert(query, update, cls);
+        WriteResult result = mongoTemplate.upsert(query, update, cls);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public <T extends Object> boolean upsert(String collectionName, Query query, Update update, Class<T> cls) {
-        UpdateResult result = mongoTemplate.upsert(query, update, cls, collectionName);
+        WriteResult result = mongoTemplate.upsert(query, update, cls, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override
     public boolean upsert(String collectionName, Query query, Update update) {
-        UpdateResult result = mongoTemplate.upsert(query, update, collectionName);
+        WriteResult result = mongoTemplate.upsert(query, update, collectionName);
         logger.info(result.toString());
-        return result.wasAcknowledged();
+        return result.isUpdateOfExisting();
     }
 
     @Override

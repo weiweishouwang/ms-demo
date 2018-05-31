@@ -1,6 +1,8 @@
 package com.zhw.ms.commons.config;
 
-import com.mongodb.*;
+import com.mongodb.Mongo;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,14 +60,11 @@ public class MongodbConfig {
             MongoClientOptions mongoClientOptions = builder.build();
             mongo.setMongoClientOptions(mongoClientOptions);*/
 
-            MongoClient client = mongo.getObject();
+            Mongo client = mongo.getObject();
 
             /*if (addresses == null) {
                 client.setReadPreference(ReadPreference.secondaryPreferred());
             }*/
-
-            //MongoClientOptions options = MongoClientOptions.builder().build();
-            //MongoClient mongoClient = new MongoClient(addresses, credential, options);
 
             MongoTemplate template = new MongoTemplate(client, property.getDatabase());
 

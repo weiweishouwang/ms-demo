@@ -17,7 +17,6 @@
             <AppenderRef ref="Console"/>
         </Async>-->
     </Appenders>
-
     <Loggers>
         <Logger name="org.apache.catalina.startup.DigesterFactory" level="error"/>
         <Logger name="org.apache.catalina.util.LifecycleBase" level="error"/>

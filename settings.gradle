@@ -1,0 +1,8 @@
+rootProject.name = 'ms-demo'
+
+include 'commons'
+include 'ms-commons'
+include 'demo-service-contract'
+include 'demo-service-client'
+include 'demo-service-server'
+

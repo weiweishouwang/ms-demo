@@ -64,6 +64,12 @@ ext {
     nexusUrl = 'http://47.96.5.19:8081'
 }
 
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
 
 buildscript {
     ext {
@@ -275,4 +281,6 @@ project(":demo-service-server") {
         compile "com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT"
         compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     }
+
+    apply plugin: 'spring-boot'
 }

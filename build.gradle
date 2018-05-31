@@ -66,8 +66,8 @@ ext {
 
 configurations.all {
     // check for updates every build
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
 }
 
 
@@ -224,7 +224,7 @@ project(":ms-commons") {
 project(":demo-service-contract") {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-        compile "com.zhw.ms:commons:1.0.0-SNAPSHOT"
+        compile ("com.zhw.ms:commons:1.0.0-SNAPSHOT") { changing = true }
     }
 
     apply plugin: 'maven-publish'
@@ -278,7 +278,8 @@ project(":demo-service-client") {
 
 project(":demo-service-server") {
     dependencies {
-        compile "com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT"
+        compile ("com.zhw.ms:commons:1.0.0-SNAPSHOT") { changing = true }
+        compile ("com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT") { changing = true }
         compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     }
 

@@ -5,7 +5,7 @@ version '1.0.0-SNAPSHOT'
 ext {
     javaxMailVersion = '1.4.7'
     junitVersion = '4.11'
-    springBootVersion = '2.0.1.RELEASE'
+    springBootVersion = '2.0.2.RELEASE'
     //springVersion = '4.2.4.RELEASE'
     commonsIOVersion = '2.4'
     commonsCollectionVersion = '3.2.2'
@@ -67,7 +67,7 @@ ext {
 
 buildscript {
     ext {
-        springBootVersion = '2.0.1.RELEASE'
+        springBootVersion = '2.0.2.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -99,6 +99,7 @@ subprojects {
     repositories {
         mavenLocal()
         jcenter()
+        maven { url "$nexusUrl/repository/maven-public" }
     }
 
     dependencies {
@@ -208,7 +209,10 @@ project(":ms-commons") {
 }
 
 project(":demo-service-contract") {
-
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile "com.zhw.ms:commons:1.0.0-SNAPSHOT"
+    }
 }
 
 project(":demo-service-client") {

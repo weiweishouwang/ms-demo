@@ -36,10 +36,11 @@
         <logger name="org.thymeleaf" level="warn"/>
         <Root level="info">
             <AppenderRef ref="Console" level="info"/>
-        </Root>
-        <Logger name="kafkaLog">
             <AppenderRef ref="Kafka" level="info"/>
-        </Logger>
+        </Root>
+        <!--<Logger name="kafkaLog" level="info">
+            <AppenderRef ref="Kafka" level="info"/>
+        </Logger>-->
         <!--<Logger name="log4j.logger.java.sql.Connection" level="debug"/>
         <Logger name="log4j.logger.java.sql.Statement" level="debug"/>
         <Logger name="log4j.logger.java.sql.PreparedStatement" level="debug"/>
@@ -57,6 +58,7 @@
 
         <Logger name="com.zhw.ms.demo.persistence" level="trace" additivity="true" >
             <AppenderRef ref="Console" level="trace"/>
+            <AppenderRef ref="Kafka" level="trace"/>
         </Logger>
         <!--<logger name="org.mybatis" level="DEBUG"/>
         <logger name="java.sql" level="DEBUG" />-->

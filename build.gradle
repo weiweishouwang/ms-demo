@@ -104,6 +104,7 @@ subprojects {
         all*.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
         all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
         all*.exclude group: "org.slf4j", module: "slf4j-jdk14"
+        all*.exclude group: "log4j", module: "log4j"
     }
 
     tasks.withType(JavaCompile) {
@@ -281,6 +282,7 @@ project(":demo-service-server") {
         compile ("com.zhw.ms:commons:1.0.0-SNAPSHOT") { changing = true }
         compile ("com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT") { changing = true }
         compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+        compile 'org.apache.kafka:kafka-clients:1.1.0'
     }
 
     apply plugin: 'spring-boot'

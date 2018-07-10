@@ -13,6 +13,10 @@
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        <Kafka name="Kafka" topic="logtest">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Property name="bootstrap.servers">47.96.5.19:9092</Property>
+        </Kafka>
         <!--<Async name="AsyncConsole" bufferSize="1024" blocking="false">
             <AppenderRef ref="Console"/>
         </Async>-->
@@ -33,6 +37,9 @@
         <Root level="info">
             <AppenderRef ref="Console" level="info"/>
         </Root>
+        <Logger name="kafkaLog">
+            <AppenderRef ref="Kafka" level="info"/>
+        </Logger>
         <!--<Logger name="log4j.logger.java.sql.Connection" level="debug"/>
         <Logger name="log4j.logger.java.sql.Statement" level="debug"/>
         <Logger name="log4j.logger.java.sql.PreparedStatement" level="debug"/>

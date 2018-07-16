@@ -1,6 +1,6 @@
 package com.zhw.ms.commons.cache;
 
-import com.zhw.ms.commons.consts.JccConst;
+import com.zhw.ms.common.contract.consts.CommonConst;
 
 /**
  * 缓存键共通
@@ -13,7 +13,7 @@ public class KeyUtil {
         int end = args.length - 1;
         for (int i = 0; i <= end; ++i) {
             if (i < end) {
-                sb.append(args[i]).append(JccConst.SEP_COLON);
+                sb.append(args[i]).append(CommonConst.SEP_COLON);
             } else {
                 sb.append(args[i]);
             }

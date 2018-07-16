@@ -1,7 +1,7 @@
 package com.zhw.ms.demo.rest;
 
-import com.zhw.ms.commons.bean.Result;
-import com.zhw.ms.commons.bean.ResultEnum;
+import com.zhw.ms.common.contract.bean.Result;
+import com.zhw.ms.common.contract.bean.ResultEnum;
 import com.zhw.ms.commons.cache.RedisUtil;
 import com.zhw.ms.commons.utils.JsonUtil;
 import com.zhw.ms.demo.api.DemoAPI;

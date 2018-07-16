@@ -1,4 +1,4 @@
-package com.zhw.ms.commons.bean;
+package com.zhw.ms.common.contract.bean;
 
 import java.io.Serializable;
 

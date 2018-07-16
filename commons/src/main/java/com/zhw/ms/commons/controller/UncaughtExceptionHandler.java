@@ -1,7 +1,7 @@
 package com.zhw.ms.commons.controller;
 
-import com.zhw.ms.commons.bean.Result;
-import com.zhw.ms.commons.bean.ResultEnum;
+import com.zhw.ms.common.contract.bean.Result;
+import com.zhw.ms.common.contract.bean.ResultEnum;
 import com.zhw.ms.commons.notity.SlackNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

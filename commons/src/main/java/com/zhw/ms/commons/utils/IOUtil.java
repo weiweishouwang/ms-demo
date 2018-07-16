@@ -1,6 +1,7 @@
 package com.zhw.ms.commons.utils;
 
-import com.zhw.ms.commons.consts.JccConst;
+import com.sun.corba.se.impl.encoding.CDROutputObject;
+import com.zhw.ms.common.contract.consts.CommonConst;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class IOUtil {
     public static String getFileType(String fileName) {
         int index = fileName.lastIndexOf(".");
         if (index < 0) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         } else {
             return fileName.substring(index + 1);
         }
@@ -252,7 +253,7 @@ public class IOUtil {
      */
     public static String getFileName(String path) {
         if (StringUtils.isBlank(path)) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         } else {
             int index = path.lastIndexOf("\\");
             if (index > -1) {
@@ -378,7 +379,7 @@ public class IOUtil {
     public static String getText(InputStream is) {
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(is, JccConst.CHARSET_UTF8));
+            br = new BufferedReader(new InputStreamReader(is, CommonConst.CHARSET_UTF8));
             StringBuilder sb = new StringBuilder();
 
             while (true) {

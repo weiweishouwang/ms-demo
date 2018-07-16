@@ -1,4 +1,4 @@
-package com.zhw.ms.commons.entity;
+package com.zhw.ms.common.contract.entity;
 
 import java.io.Serializable;
 import java.util.Date;

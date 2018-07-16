@@ -1,4 +1,4 @@
-package com.zhw.ms.commons.consts;
+package com.zhw.ms.common.contract.consts;
 
 /**
  * Created by Administrator on 2015/12/31 0031.

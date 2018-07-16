@@ -1,35 +1,34 @@
-package com.zhw.ms.commons.pagination;
+package com.zhw.ms.common.contract.pagination;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
- * 分页数据封装Map
+ * 分页数据封装
  * Created by ZHW on 2015/5/11.
  */
-public class PageMap implements Serializable {
+public class PageData<E> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Map<String, Object>> rows;
+    private List<E> rows;
     private int total;
     private int page;
     private int size;
-    private List<Map<String, Object>> footer;
+    private List<E> footer;
 
-    public static PageMap getPageData(List<Map<String, Object>> rows, int total) {
-        PageMap data = new PageMap();
+    public static <E> PageData<E> getPageData(List<E> rows, int total) {
+        PageData<E> data = new PageData<E>();
         data.setRows(rows);
         data.setTotal(total);
         return data;
     }
 
-    public List<Map<String, Object>> getRows() {
+    public List<E> getRows() {
         return rows;
     }
 
-    public void setRows(List<Map<String, Object>> rows) {
+    public void setRows(List<E> rows) {
         this.rows = rows;
     }
 
@@ -57,11 +56,11 @@ public class PageMap implements Serializable {
         this.size = size;
     }
 
-    public List<Map<String, Object>> getFooter() {
+    public List<E> getFooter() {
         return footer;
     }
 
-    public void setFooter(List<Map<String, Object>> footer) {
+    public void setFooter(List<E> footer) {
         this.footer = footer;
     }
 

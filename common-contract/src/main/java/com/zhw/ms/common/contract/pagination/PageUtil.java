@@ -1,4 +1,4 @@
-package com.zhw.ms.commons.pagination;
+package com.zhw.ms.common.contract.pagination;
 
 import java.util.ArrayList;
 import java.util.List;

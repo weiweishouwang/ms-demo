@@ -1,5 +1,7 @@
 package com.zhw.ms.commons.entity;
 
+import com.zhw.ms.common.contract.entity.Entity;
+
 public class Admin extends Entity {
 
     private String account;

@@ -1,7 +1,7 @@
 package com.zhw.ms.commons.db;
 
-import com.zhw.ms.commons.bean.ResultEnum;
-import com.zhw.ms.commons.exception.JccException;
+import com.zhw.ms.common.contract.bean.ResultEnum;
+import com.zhw.ms.common.contract.exception.BusinessException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -54,7 +54,7 @@ public abstract class DataSourceHandler {
                 } else if (method.isAnnotationPresent(SlaverDataSource.class)) {
                     DataSourceHandler.setDbType(DataSourceHandlerImpl.SLAVE_DS);
                 } else {
-                    throw new JccException(ResultEnum.DATA_SOURCE_ERROR);
+                    throw new BusinessException(ResultEnum.DATA_SOURCE_ERROR);
                 }
             } else {
                 DataSourceHandler.setDbType(DataSourceHandlerImpl.SLAVE_DS);

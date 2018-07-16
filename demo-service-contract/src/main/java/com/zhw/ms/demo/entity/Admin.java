@@ -1,6 +1,6 @@
 package com.zhw.ms.demo.entity;
 
-import com.zhw.ms.commons.entity.Entity;
+import com.zhw.ms.common.contract.entity.Entity;
 
 public class Admin extends Entity {
 

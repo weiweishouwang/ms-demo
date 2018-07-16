@@ -5,4 +5,5 @@ include 'ms-commons'
 include 'demo-service-contract'
 include 'demo-service-client'
 include 'demo-service-server'
+include 'common-contract'
 

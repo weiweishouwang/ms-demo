@@ -1,8 +1,8 @@
 package com.zhw.ms.commons.controller;
 
-import com.zhw.ms.commons.bean.Result;
-import com.zhw.ms.commons.bean.ResultEnum;
-import com.zhw.ms.commons.exception.JccException;
+import com.zhw.ms.common.contract.bean.Result;
+import com.zhw.ms.common.contract.bean.ResultEnum;
+import com.zhw.ms.common.contract.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -36,8 +36,8 @@ public class ControllerHandler {
         if (exception instanceof MissingServletRequestParameterException) {
             err.setRetCode(ResultEnum.ERROR_ARGUMENT.code);
             err.setRetMsg(ResultEnum.ERROR_ARGUMENT.message);
-        } else if (exception instanceof JccException) {
-            JccException e = (JccException) exception;
+        } else if (exception instanceof BusinessException) {
+            BusinessException e = (BusinessException) exception;
             err.setRetCode(e.getRetCode());
             err.setRetMsg(e.getRetMsg());
         } else {

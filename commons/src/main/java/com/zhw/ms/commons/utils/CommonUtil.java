@@ -1,6 +1,6 @@
 package com.zhw.ms.commons.utils;
 
-import com.zhw.ms.commons.consts.JccConst;
+import com.zhw.ms.common.contract.consts.CommonConst;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,9 @@ import java.util.regex.Pattern;
  * 通用共通
  * Created by ZHW on 2015/5/11.
  */
-public class JccUtil {
+public class CommonUtil {
 
-    private static Logger logger = LoggerFactory.getLogger(JccUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
     /**
      * 转换为小写
@@ -33,7 +33,7 @@ public class JccUtil {
      */
     public static String toLower(String obj) {
         if (obj == null) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         } else {
             return obj.toLowerCase().trim();
         }
@@ -47,7 +47,7 @@ public class JccUtil {
      */
     public static String toUpper(String obj) {
         if (obj == null) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         } else {
             return obj.toUpperCase().trim();
         }
@@ -185,7 +185,7 @@ public class JccUtil {
         }
 
         try {
-            String utf8Str = new String(str.getBytes(), JccConst.CHARSET_UTF8);
+            String utf8Str = new String(str.getBytes(), CommonConst.CHARSET_UTF8);
             return utf8Str;
         } catch (UnsupportedEncodingException e) {
             return str;
@@ -321,7 +321,7 @@ public class JccUtil {
     public static String getLikeStr(String str) {
         StringBuilder sb = new StringBuilder();
         sb.append("%");
-        sb.append(JccUtil.toStr(str));
+        sb.append(CommonUtil.toStr(str));
         sb.append("%");
 
         return sb.toString();

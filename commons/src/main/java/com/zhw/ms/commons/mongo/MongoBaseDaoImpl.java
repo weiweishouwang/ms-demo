@@ -2,7 +2,7 @@ package com.zhw.ms.commons.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
-import com.zhw.ms.commons.entity.Entity;
+import com.zhw.ms.common.contract.entity.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.zhw.ms.commons.utils;
 
-import com.zhw.ms.commons.consts.JccConst;
+import com.zhw.ms.common.contract.consts.CommonConst;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +128,7 @@ public class DateUtil {
      */
     public static String format(Date date, String pattern) {
         if (date == null || pattern == null) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         }
 
         SimpleDateFormat simpleDateFordmat = new SimpleDateFormat(pattern);
@@ -144,11 +144,11 @@ public class DateUtil {
      */
     public static String format(Object date, String pattern) {
         if (date == null || pattern == null) {
-            return JccConst.EMPTY;
+            return CommonConst.EMPTY;
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(JccUtil.toDate(date));
+        return simpleDateFormat.format(CommonUtil.toDate(date));
     }
 
     /**

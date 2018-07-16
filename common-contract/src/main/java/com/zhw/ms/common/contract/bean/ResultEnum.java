@@ -1,4 +1,4 @@
-package com.zhw.ms.commons.bean;
+package com.zhw.ms.common.contract.bean;
 
 /**
  * Created by hongweizou on 16/7/29.

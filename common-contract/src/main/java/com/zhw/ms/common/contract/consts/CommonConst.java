@@ -1,9 +1,9 @@
-package com.zhw.ms.commons.consts;
+package com.zhw.ms.common.contract.consts;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JccConst {
+public class CommonConst {
 
 
     public final static String DEFAULT_DOC_ID_FIELD = "docid";
@@ -149,8 +149,6 @@ public class JccConst {
         acceptUploadType.add(PNG_TYPE);
         acceptUploadType.add(BMP_TYPE);
     }
-
-    public static String SERVER_ADDRESS = "http://test.jucaicat.com/wechat/";
 
     public static String YES = "YES";
     public static String NO = "NO";

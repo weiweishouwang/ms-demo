@@ -1,6 +1,6 @@
 package com.zhw.ms.commons.filter;
 
-import com.zhw.ms.commons.utils.JccUtil;
+import com.zhw.ms.commons.utils.CommonUtil;
 import com.zhw.ms.commons.utils.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class LogFilter implements Filter {
      */
     private void initMDC() {
         MDC.put("ip", WebUtil.getIP());
-        MDC.put("requestID", JccUtil.getUUID());
+        MDC.put("requestID", CommonUtil.getUUID());
     }
 
     /**

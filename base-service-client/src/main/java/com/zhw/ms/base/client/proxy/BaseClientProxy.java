@@ -1,4 +1,4 @@
-package com.zhw.ms.base.proxy;
+package com.zhw.ms.base.client.proxy;
 
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import com.zhw.ms.common.contract.bean.Result;

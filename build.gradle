@@ -266,7 +266,7 @@ project(":commons") {
 }
 
 
-project(":ms-commons") {
+project(":base-service-client") {
     dependencies {
         compile 'org.springframework.cloud:spring-cloud-starter-eureka'
         compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
@@ -288,7 +288,7 @@ project(":ms-commons") {
     publishing {
         publications {
             mavenJava(MavenPublication) {
-                artifactId 'ms-commons'
+                artifactId 'base-service-client'
                 from components.java
                 artifact(sourcesJar) {
                     classifier = 'sources'
@@ -371,7 +371,7 @@ project(":demo-service-contract") {
 
 project(":demo-service-client") {
     dependencies {
-        compile("com.zhw.ms:ms-commons:1.0.0-SNAPSHOT") { changing = true }
+        compile("com.zhw.ms:base-service-client:1.0.0-SNAPSHOT") { changing = true }
 
         compile("com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT") { changing = true }
 

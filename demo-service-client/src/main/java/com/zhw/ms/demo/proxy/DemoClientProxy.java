@@ -3,6 +3,7 @@ package com.zhw.ms.demo.proxy;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
+import com.zhw.ms.base.client.proxy.BaseClientProxy;
 import com.zhw.ms.common.contract.bean.Result;
 import com.zhw.ms.common.contract.bean.ResultEnum;
 import com.zhw.ms.demo.api.DemoAPI;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.Future;
 
 @Service
-public class DemoClientProxy implements DemoAPI {
+public class DemoClientProxy extends BaseClientProxy implements DemoAPI {
     private static final Logger logger = LoggerFactory
             .getLogger(DemoClientProxy.class);
 
@@ -48,12 +49,4 @@ public class DemoClientProxy implements DemoAPI {
         return backFallback(t);
     }
 
-    protected <T> Result<T> backFallback(Throwable t) {
-        logger.error(t.getMessage(), t);
-        if (t instanceof HystrixTimeoutException) {
-            return new Result<>(ResultEnum.CALL_TIMEOUT);
-        }
-
-        return new Result<>(ResultEnum.CALL_FAIL);
-    }
 }

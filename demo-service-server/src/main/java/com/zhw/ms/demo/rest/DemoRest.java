@@ -5,6 +5,7 @@ import com.zhw.ms.common.contract.bean.ResultEnum;
 import com.zhw.ms.commons.cache.RedisUtil;
 import com.zhw.ms.commons.utils.JsonUtil;
 import com.zhw.ms.demo.api.DemoAPI;
+import com.zhw.ms.demo.entity.Admin;
 import com.zhw.ms.demo.service.DemoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,9 @@ public class DemoRest implements DemoAPI {
     private DemoService demoService;
 
     @Override
-    public Result<Object> getAdmin(@RequestParam("id") Long id) {
+    public Result<Admin> getAdmin(@RequestParam("id") Long id) {
         logger.info("start");
-        Result<Object> result = new Result<>();
+        Result<Admin> result = new Result<>();
         result.setRetCode(ResultEnum.SUCCESS.getCode());
         result.setRetMsg(ResultEnum.SUCCESS.getMessage());
         result.setData(demoService.getAdmin(id));
@@ -37,7 +38,7 @@ public class DemoRest implements DemoAPI {
     }
 
     @Override
-    public Result<Object> throwException() throws Exception {
+    public Result<Admin> throwException() throws Exception {
         throw new Exception("出错了");
     }
 

@@ -1,6 +1,7 @@
 package com.zhw.ms.demo.proxy;
 
 import com.zhw.ms.common.contract.bean.Result;
+import com.zhw.ms.demo.entity.Admin;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class DemoClientProxyTest {
 
     @Test
     public void test02() throws ExecutionException, InterruptedException {
-        Future<Result<Object>> future = demoClientProxy.getAdminAsync(1L);
+        Future<Result<Admin>> future = demoClientProxy.getAdminAsync(1L);
         Assert.assertTrue(future.get().isSuccess());
     }
 }

@@ -78,7 +78,8 @@ buildscript {
     }
     repositories {
         mavenLocal()
-        jcenter()
+        //jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
@@ -114,7 +115,8 @@ subprojects {
 
     repositories {
         mavenLocal()
-        jcenter()
+        //jcenter()
+        mavenCentral()
         maven { url "$nexusUrl/repository/maven-public" }
     }
 

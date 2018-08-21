@@ -8,6 +8,7 @@ import com.zhw.ms.common.contract.bean.Result;
 import com.zhw.ms.common.contract.bean.ResultEnum;
 import com.zhw.ms.demo.api.DemoAPI;
 import com.zhw.ms.demo.client.DemoClient;
+import com.zhw.ms.demo.entity.Admin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +27,26 @@ public class DemoClientProxy extends BaseClientProxy implements DemoAPI {
 
     @Override
     @HystrixCommand(fallbackMethod = "getAdminFallback")
-    public Result<Object> getAdmin(Long id) {
+    public Result<Admin> getAdmin(Long id) {
         return demoClient.getAdmin(id);
     }
 
     @Override
-    public Result<Object> throwException() {
+    public Result<Admin> throwException() {
         return null;
     }
 
     @HystrixCommand(fallbackMethod = "getAdminFallback")
-    public Future<Result<Object>> getAdminAsync(Long id) {
-        return new AsyncResult<Result<Object>>() {
+    public Future<Result<Admin>> getAdminAsync(Long id) {
+        return new AsyncResult<Result<Admin>>() {
             @Override
-            public Result<Object> invoke() {
+            public Result<Admin> invoke() {
                 return demoClient.getAdmin(id);
             }
         };
     }
 
-    public Result<Object> getAdminFallback(Long id, Throwable t) {
+    public Result<Admin> getAdminFallback(Long id, Throwable t) {
         return backFallback(t);
     }
 

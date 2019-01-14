@@ -2,7 +2,6 @@ package com.zhw.ms.commons.controller;
 
 import com.zhw.ms.common.contract.bean.Result;
 import com.zhw.ms.common.contract.bean.ResultEnum;
-import com.zhw.ms.commons.notity.SlackNotification;
 import com.zhw.ms.commons.notity.WechatNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +27,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
-public class UncaughtExceptionHandler extends ResponseEntityExceptionHandler {
-    private static Logger logger = LoggerFactory.getLogger(UncaughtExceptionHandler.class);
+//@ControllerAdvice
+public class MonitorExceptionHandler extends ResponseEntityExceptionHandler {
+    private static Logger logger = LoggerFactory.getLogger(MonitorExceptionHandler.class);
     private static String ips = "";
 
     static {
@@ -59,14 +58,14 @@ public class UncaughtExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${spring.application.name}")
     public String serviceName;
 
-    ConcurrentMap<Timestamp, String> savedFailedMessages = null;
-
-    public UncaughtExceptionHandler() {
-        savedFailedMessages = new ConcurrentHashMap<>();
-    }
-
-    @ExceptionHandler({Exception.class})
+    //@ExceptionHandler({Exception.class})
     protected ResponseEntity<Object> handleBusinessException(Exception e, WebRequest request) {
+
+
+        request.getHeader("channel-id");
+        String institutionId = request.getHeader("institution-id");
+
+
         Iterator<String> names = request.getHeaderNames();
         StringBuilder sbb = new StringBuilder();
         while (names.hasNext()) {
@@ -105,38 +104,13 @@ public class UncaughtExceptionHandler extends ResponseEntityExceptionHandler {
 
         msg = msg + sb.toString() + "\n" + headers;
 
-        //SlackNotification.error(msg);
         WechatNotification.error(msg);
-        saveExceptionMessageForSpringBootAdmin(msg);
 
         Result<Object> resp = new Result<>();
         resp.setRetCode(ResultEnum.SYSTEM_ERROR.code);
         resp.setRetMsg(ResultEnum.SYSTEM_ERROR.message);
 
         return handleExceptionInternal(e, resp, null, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    public ConcurrentMap<Timestamp, String> getSaveExceptionMessageForSpringBootAdmin() {
-        synchronized (savedFailedMessages) {
-            return new ConcurrentHashMap<>(savedFailedMessages);
-        }
-    }
-
-    /*
-     * Save the exception message to an expiring map.
-     */
-    private void saveExceptionMessageForSpringBootAdmin(String expMessage) {
-        logger.info("Saving exception information");
-        synchronized (savedFailedMessages) {
-            try {
-                savedFailedMessages.put(new Timestamp(new Date().getTime()), expMessage);
-                if (savedFailedMessages.size() > 10) {
-                    Timestamp initialTimeStamp = savedFailedMessages.entrySet().stream().sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).map(e -> e.getKey()).collect(Collectors.toList()).get(0);
-                    savedFailedMessages.remove(initialTimeStamp);
-                }
-            } catch (Exception e3) {
-            }
-        }
     }
 
     private String toQueryString(Map<String, String[]> paramMap) {

@@ -36,7 +36,7 @@
         <logger name="org.thymeleaf" level="warn"/>
         <Root level="info">
             <AppenderRef ref="Console" level="info"/>
-            <AppenderRef ref="Kafka" level="info"/>
+            <!--<AppenderRef ref="Kafka" level="info"/>-->
         </Root>
         <!--<Logger name="kafkaLog" level="info">
             <AppenderRef ref="Kafka" level="info"/>
@@ -58,7 +58,7 @@
 
         <Logger name="com.zhw.ms.demo.persistence" level="trace" additivity="true" >
             <AppenderRef ref="Console" level="trace"/>
-            <AppenderRef ref="Kafka" level="trace"/>
+            <!--<AppenderRef ref="Kafka" level="trace"/>-->
         </Logger>
         <!--<logger name="org.mybatis" level="DEBUG"/>
         <logger name="java.sql" level="DEBUG" />-->

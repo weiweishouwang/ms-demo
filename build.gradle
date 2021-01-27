@@ -62,7 +62,7 @@ ext {
     springDataMongodb = '2.0.6.RELEASE'
     kafkaClientsVersion = '1.1.0'
 
-    nexusUrl = 'http://47.96.5.19:8081'
+    //nexusUrl = 'http://47.96.5.19:8081'
 }
 
 configurations.all {
@@ -71,37 +71,35 @@ configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
 
-
 buildscript {
     ext {
-        springBootVersion = '1.5.14.RELEASE'
+        springBootVersion = '2.4.2'
+        springCloudVersion = '2020.0.0'
+        springBootManagementVersion = '1.0.11.RELEASE'
     }
+
     repositories {
-        mavenLocal()
-        //jcenter()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         mavenCentral()
     }
+
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${springBootManagementVersion}")
     }
 }
 
 
 
-subprojects {
-    apply plugin: 'idea'
+allprojects {
     apply plugin: 'java'
-    apply plugin: "io.spring.dependency-management"
+    apply plugin: 'idea'
+    apply plugin: 'io.spring.dependency-management'
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Edgware.SR4"
-        }
-    }
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
     configurations {
         all*.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
         all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
@@ -109,24 +107,29 @@ subprojects {
         all*.exclude group: "log4j", module: "log4j"
     }
 
-    tasks.withType(JavaCompile) {
+    /*tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-    }
+    }*/
 
     repositories {
         mavenLocal()
-        //jcenter()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         mavenCentral()
-        maven { url "$nexusUrl/repository/maven-public" }
     }
 
+    dependencyManagement {
+        imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+        imports { mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}" }
+    }
+
+
     dependencies {
-        compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
-        compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
-        compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
-        //compile "org.springframework:spring-aspects:$springVersion"
-        
-        
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-aop"
+        compile "org.springframework.boot:spring-boot-starter-actuator"
+
+
         compile "com.google.guava:guava:$guavaVersion"
         compile "commons-collections:commons-collections:$commonsCollectionVersion"
         compile "commons-fileupload:commons-fileupload:$commonsFileUploadVersion"
@@ -159,278 +162,9 @@ subprojects {
         compile "com.lmax:disruptor:3.2.0"
 
 
-        testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+        testCompile "org.springframework.boot:spring-boot-starter-test"
         testCompile "org.mockito:mockito-core:2.0.57-beta"
         testCompile group: 'org.jmockit', name: 'jmockit', version: '1.8'
     }
-}
 
-
-project(":common-contract") {
-
-    apply plugin: 'maven-publish'
-
-    group 'com.zhw.ms'
-    version '1.0.0-SNAPSHOT'
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId 'common-contract'
-                from components.java
-                artifact(sourcesJar) {
-                    classifier = 'sources'
-                }
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.version.text() == "unspecified") {
-                            dep.getAt('groupId').get(0).setValue(project.group)
-                            dep.getAt('version').get(0).setValue(project.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url "$nexusUrl/repository/maven-snapshots/"
-                } else {
-                    url "$nexusUrl/repository/maven-releases/"
-                }
-                credentials {
-                    username = 'zhw'
-                    password = 'zhw123'
-                }
-            }
-        }
-    }
-}
-
-
-project(":commons") {
-    dependencies {
-        compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
-        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-        compile "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
-        compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
-        compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisSpringVersion"
-        compile("com.zhw.ms:common-contract:1.0.0-SNAPSHOT") { changing = true }
-    }
-
-    apply plugin: 'maven-publish'
-
-    group 'com.zhw.ms'
-    version '1.0.0-SNAPSHOT'
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId 'commons'
-                from components.java
-                artifact(sourcesJar) {
-                    classifier = 'sources'
-                }
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.version.text() == "unspecified") {
-                            dep.getAt('groupId').get(0).setValue(project.group)
-                            dep.getAt('version').get(0).setValue(project.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url "$nexusUrl/repository/maven-snapshots/"
-                } else {
-                    url "$nexusUrl/repository/maven-releases/"
-                }
-                credentials {
-                    username = 'zhw'
-                    password = 'zhw123'
-                }
-            }
-        }
-    }
-}
-
-
-project(":base-service-client") {
-    dependencies {
-        compile 'org.springframework.cloud:spring-cloud-starter-eureka'
-        compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
-        compile 'org.springframework.cloud:spring-cloud-starter-feign'
-        compile 'org.springframework.cloud:spring-cloud-starter-ribbon'
-        compile("com.zhw.ms:common-contract:1.0.0-SNAPSHOT") { changing = true }
-    }
-
-    apply plugin: 'maven-publish'
-
-    group 'com.zhw.ms'
-    version '1.0.0-SNAPSHOT'
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId 'base-service-client'
-                from components.java
-                artifact(sourcesJar) {
-                    classifier = 'sources'
-                }
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.version.text() == "unspecified") {
-                            dep.getAt('groupId').get(0).setValue(project.group)
-                            dep.getAt('version').get(0).setValue(project.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url "$nexusUrl/repository/maven-snapshots/"
-                } else {
-                    url "$nexusUrl/repository/maven-releases/"
-                }
-                credentials {
-                    username = 'zhw'
-                    password = 'zhw123'
-                }
-            }
-        }
-    }
-}
-
-project(":demo-service-contract") {
-    dependencies {
-        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-        compile("com.zhw.ms:common-contract:1.0.0-SNAPSHOT") { changing = true }
-    }
-
-    apply plugin: 'maven-publish'
-
-    group 'com.zhw.ms'
-    version '1.0.0-SNAPSHOT'
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId 'demo-service-contract'
-                from components.java
-                artifact(sourcesJar) {
-                    classifier = 'sources'
-                }
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.version.text() == "unspecified") {
-                            dep.getAt('groupId').get(0).setValue(project.group)
-                            dep.getAt('version').get(0).setValue(project.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url "$nexusUrl/repository/maven-snapshots/"
-                } else {
-                    url "$nexusUrl/repository/maven-releases/"
-                }
-                credentials {
-                    username = 'zhw'
-                    password = 'zhw123'
-                }
-            }
-        }
-    }
-}
-
-project(":demo-service-client") {
-    dependencies {
-        compile("com.zhw.ms:base-service-client:1.0.0-SNAPSHOT") { changing = true }
-
-        compile("com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT") { changing = true }
-
-        compile "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
-    }
-
-    apply plugin: 'maven-publish'
-
-    group 'com.zhw.ms'
-    version '1.0.0-SNAPSHOT'
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId 'demo-service-client'
-                from components.java
-                artifact(sourcesJar) {
-                    classifier = 'sources'
-                }
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.version.text() == "unspecified") {
-                            dep.getAt('groupId').get(0).setValue(project.group)
-                            dep.getAt('version').get(0).setValue(project.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url "$nexusUrl/repository/maven-snapshots/"
-                } else {
-                    url "$nexusUrl/repository/maven-releases/"
-                }
-                credentials {
-                    username = 'zhw'
-                    password = 'zhw123'
-                }
-            }
-        }
-    }
-}
-
-project(":demo-service-server") {
-    dependencies {
-        compile ("com.zhw.ms:commons:1.0.0-SNAPSHOT") { changing = true }
-        compile ("com.zhw.ms:demo-service-contract:1.0.0-SNAPSHOT") { changing = true }
-        compile 'org.springframework.cloud:spring-cloud-starter-eureka'
-        compile "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
-    }
-
-    apply plugin: 'spring-boot'
 }

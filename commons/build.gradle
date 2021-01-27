@@ -1,0 +1,9 @@
+
+dependencies {
+    compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-redis"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisSpringVersion"
+    compile project(":common-contract")
+}

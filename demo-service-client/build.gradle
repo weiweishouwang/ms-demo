@@ -1,0 +1,6 @@
+
+dependencies {
+    implementation project(":base-service-client")
+    implementation project(":demo-service-contract")
+    compile "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
+}

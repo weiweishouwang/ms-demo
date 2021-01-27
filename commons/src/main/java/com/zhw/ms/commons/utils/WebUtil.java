@@ -28,6 +28,24 @@ public class WebUtil {
     private static Logger logger = LoggerFactory.getLogger(WebUtil.class);
 
     /**
+     * 获取header
+     *
+     * @return String
+     */
+    public static String getHeader(String name) {
+
+        if (RequestContextHolder.getRequestAttributes() != null) {
+            HttpServletRequest request = getRequest();
+
+            if (request != null) {
+                return request.getHeader(name);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * 获取Request
      *
      * @return request
